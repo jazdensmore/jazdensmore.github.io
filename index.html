@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio | GTM Revenue Operations</title>
+  <title>Jazmin Densmore Portfolio | GTM Revenue Operations</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -366,6 +366,8 @@
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
       .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      #hamburger { display: block; }
     }
     body.dark {
   --ink: #e8e4db;
@@ -385,7 +387,7 @@
 <body>
 
   <nav>
-    <span class="nav-mark">GTM RevOps</span>
+    <span class="nav-mark">Jazmin Densmore | GTM RevOps</span>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -402,12 +404,28 @@
       color: var(--ink-muted); 
       cursor: pointer;">Dark
     </button>
+    <button id="hamburger" style="display: none; 
+      background: none; 
+      border: 1px solid var(--rule); 
+      padding: 0.3rem 0.6rem; 
+      font-family: var(--mono); 
+      font-size: 11px; cursor: pointer; 
+      color: var(--ink-muted);">☰
+    </button>
   </nav>
+
+  <div id="mobile-menu" style="display: none; position: fixed; top: 49px; left: 0; right: 0; background: var(--paper-nav); border-bottom: 1px solid var(--rule); z-index: 99; padding: 1rem 1.25rem; flex-direction: column; gap: 1rem;">
+    <a href="#about" onclick="closeMobileMenu()" style="text-decoration: none; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">About</a>
+    <a href="#skills" onclick="closeMobileMenu()" style="text-decoration: none; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Skills</a>
+    <a href="#experience" onclick="closeMobileMenu()" style="text-decoration: none; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Experience</a>
+    <a href="#tools" onclick="closeMobileMenu()" style="text-decoration: none; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Tools Built</a>
+    <a href="#contact" onclick="closeMobileMenu()" style="text-decoration: none; color: var(--ink-muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Contact</a>
+  </div>  
 
   <!-- HERO -->
   <div class="hero">
     <div class="hero-text">
-      <p class="hero-eyebrow">GTM Revenue Operations</p>
+      <p class="hero-eyebrow">Jazmin Densmore | GTM Revenue Operations</p>
       <h1>Systems that<br/><em>scale.</em></h1>
       <p class="hero-sub">
         15+ years building & supporting the technical infrastructure behind high-performing revenue teams.
@@ -766,6 +784,19 @@
     toggle.textContent = isDark ? 'Light' : 'Dark';
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function closeMobileMenu() {
+  mobileMenu.style.display = 'none';
+  hamburger.textContent = '☰';
+  }
+
+  hamburger.addEventListener('click', () => {
+  const isOpen = mobileMenu.style.display === 'flex';
+  mobileMenu.style.display = isOpen ? 'none' : 'flex';
+  hamburger.textContent = isOpen ? '☰' : '✕';
+});
 </script>
 </body>
 </html>
