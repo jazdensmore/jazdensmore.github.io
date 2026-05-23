@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio | GTM Revenue Operations</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0f0e;
+      --ink-muted: #5a5952;
+      --ink-faint: #9a9890;
+      --paper: #f5f2eb;
+      --paper-warm: #edeae0;
+      --paper-card: #faf8f3;
+      --accent: #1a472a;
+      --accent-light: #2d6a42;
+      --accent-glow: #c8dfc0;
+      --rule: #d4d0c4;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Fraunces', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(245,242,235,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-mark {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 4rem;
+    }
+    .hero-text { animation: fadeUp 0.8s ease both; }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--ink-muted);
+      max-width: 42ch;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .stat-card {
+      background: var(--paper-card);
+      border: 1px solid var(--rule);
+      padding: 1.5rem;
+    }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.06em; line-height: 1.5; }
+
+    /* SECTION BASE */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--rule);
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+    h2 em { font-style: italic; color: var(--accent); }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-body p { color: var(--ink-muted); line-height: 1.9; margin-bottom: 1rem; }
+    .about-aside { border-left: 2px solid var(--accent-glow); padding-left: 1.5rem; }
+    .cert-item { margin-bottom: 1.25rem; }
+    .cert-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .cert-date { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-block {
+      background: var(--paper-card);
+      border: 1px solid var(--rule);
+      padding: 1.5rem;
+    }
+    .skill-block-title {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      background: var(--paper-warm);
+      border: 1px solid var(--rule);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+    .tag.highlight {
+      background: var(--accent-glow);
+      border-color: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* EXPERIENCE */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-meta { padding-top: 0.1rem; }
+    .exp-company { font-weight: 500; font-size: 13px; color: var(--ink); margin-bottom: 0.25rem; }
+    .exp-period { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+    .exp-role {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .exp-bullets { list-style: none; }
+    .exp-bullets li {
+      position: relative;
+      padding-left: 1.25rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.6rem;
+      line-height: 1.7;
+      font-size: 13px;
+    }
+    .exp-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 12px;
+    }
+    .exp-highlight {
+      display: inline;
+      background: var(--accent-glow);
+      padding: 0 3px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* TOOLS / PROJECTS */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+    .tool-card {
+      background: var(--paper-card);
+      border: 1px solid var(--rule);
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .tool-card:hover { border-color: var(--accent-light); }
+    .tool-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .tool-number { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--rule); }
+    .tool-badge {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--accent-light);
+    }
+    .tool-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.3; }
+    .tool-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.75; }
+    .tool-stack { margin-top: 1rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tool-stack span {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      border: 1px solid var(--rule);
+      padding: 0.15rem 0.5rem;
+    }
+    .tool-note { margin-top: 1rem; font-size: 11px; color: var(--ink-faint); font-style: italic; }
+
+    /* CONTACT */
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .contact-copy h2 { margin-bottom: 1rem; }
+    .contact-copy p { color: var(--ink-muted); line-height: 1.8; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--paper-card);
+      border: 1px solid var(--rule);
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); background: var(--accent-glow); }
+    .contact-link-label { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
+    .contact-link-value { font-size: 13px; font-weight: 500; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--rule);
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.25rem 3rem; gap: 3rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      section { padding: 4rem 1.25rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-mark">GTM RevOps</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#tools">Tools Built</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">GTM Revenue Operations</p>
+      <h1>Systems that<br/><em>scale.</em></h1>
+      <p class="hero-sub">
+        15+ years building & supporting the technical infrastructure behind high-performing revenue teams.
+        Salesforce admin, data operations specialist, and hands-on builder of AI-powered internal tools.
+      </p>
+      <a href="#contact" class="hero-cta">Get in touch →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">85%</div>
+        <div class="stat-label">Weekly support cases personally resolved within the team queue</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">30K</div>
+        <div class="stat-label">Account deduplication initiative delivered in under 6 months</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">7</div>
+        <div class="stat-label">Internal self-serve tools shipped, eliminating manual fulfillment</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Years of Salesforce, data ops & GTM infrastructure experience</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-body">
+        <h2>GTM engineer who <em>builds</em>, not just operates.</h2>
+        <p>
+          I'm a GTM Revenue Operations specialist and Certified Salesforce Administrator with over 15 years building
+          and operating the technical infrastructure behind high-performing revenue teams. My work sits at the intersection
+          of data quality, systems design, and automation - turning ambiguous business problems into clean, programmatic solutions.
+        </p>
+        <p>
+          What sets me apart: I don't just administer systems, I build tooling to extend them. At Shopify I shipped seven
+          internal self-serve tools using Claude Code and Gumloop - treating internal tooling as a product - eliminating
+          manual request fulfillment and reducing team operational dependency. The most complex of these encoded years of
+          institutional knowledge into a rigorous AI-powered decision matrix covering nine duplicate account scenarios.
+        </p>
+        <p>
+          I'm comfortable going deep on Salesforce data models, cross-system integrations, SQL pipelines, and
+          AI-augmented workflows - and I bring the documentation and process discipline to make those systems maintainable.
+        </p>
+      </div>
+      <div class="about-aside">
+        <p class="section-label" style="margin-bottom: 1.5rem;">Certifications</p>
+        <div class="cert-item">
+          <div class="cert-name">DCAM Certified V2</div>
+          <div class="cert-date">January 2024</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Salesforce Administrator (ADM201)</div>
+          <div class="cert-date">January 2023</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">FranklinCovey Project Management Essentials</div>
+          <div class="cert-date">August 2015</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Skills</p>
+    <h2>Technical <em>toolkit.</em></h2>
+    <div class="skills-grid" style="margin-top: 2.5rem;">
+      <div class="skill-block">
+        <div class="skill-block-title">Salesforce</div>
+        <div class="skill-tags">
+          <span class="tag">Sales Cloud</span>
+          <span class="tag">Service Cloud</span>
+          <span class="tag">Data Loader</span>
+          <span class="tag">Salesforce Inspector</span>
+          <span class="tag">Workbench</span>
+          <span class="tag">DemandTools</span>
+          <span class="tag">Apsona</span>
+          <span class="tag">SOQL</span>
+          <span class="tag">Reporting & Dashboards</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Data & Analytics</div>
+        <div class="skill-tags">
+          <span class="tag">SQL</span>
+          <span class="tag">BigQuery</span>
+          <span class="tag">Snowflake</span>
+          <span class="tag">Looker</span>
+          <span class="tag">Excel</span>
+          <span class="tag">Google Sheets</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">AI & Automation</div>
+        <div class="skill-tags">
+          <span class="tag">Claude Code</span>
+          <span class="tag">Gumloop</span>
+          <span class="tag">Cursor</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Data Enrichment</div>
+        <div class="skill-tags">
+          <span class="tag">ZoomInfo</span>
+          <span class="tag">Store Leads</span>
+          <span class="tag">Enlyft</span>
+          <span class="tag">Lusha</span>
+          <span class="tag">D&B Hoovers</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Projects & Platforms</div>
+        <div class="skill-tags">
+          <span class="tag">Jira</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">GitHub</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Competencies</div>
+        <div class="skill-tags">
+          <span class="tag">Data Governance</span>
+          <span class="tag">Data Quality</span>
+          <span class="tag">UAT Coordination</span>
+          <span class="tag">Agile / Product Owner</span>
+          <span class="tag">Merger & Acquisition Data Integration</span>
+          <span class="tag">Process Design</span>
+          <span class="tag">Digital Transformation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Experience</p>
+    <h2>Where I've <em>worked.</em></h2>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">Shopify</div>
+        <div class="exp-period">Aug 2023 - Apr 2026</div>
+      </div>
+      <div>
+        <div class="exp-role">Senior GTM Data Operations</div>
+        <ul class="exp-bullets">
+          <li>Served as primary owner of GTM data operations, resolving <span class="exp-highlight">85% of weekly support cases</span>, 65% of all submitted tickets, and 80% of total data update volume across global regions.</li>
+          <li>Architected and executed a <span class="exp-highlight">30,000-account deduplication initiative</span> in under 6 months, engineering automated workflows and establishing data governance standards adopted globally.</li>
+          <li>Built <span class="exp-highlight">seven internal self-serve tools</span> using Claude Code and Gumloop, eliminating manual request fulfillment and reducing team operational dependency - treating internal tooling as a product.</li>
+          <li>Partnered with RevOps, Sales, and Engineering to design and implement improved Salesforce workflows, including a major account data model restructuring and integration build.</li>
+          <li>Designed and maintained data insert processes for account and contact loads averaging tens of thousands of records per quarterly cycle, including book-of-business updates and territory realignment.</li>
+          <li>Maintained a single source of truth for revenue data through continuous Salesforce hygiene correction, normalization, and third-party enrichment via ZoomInfo, Store Leads, Lusha, and Enlyft.</li>
+          <li>Built targeted marketing campaign audience lists and operationalized campaigns end-to-end, including enrichment, segmentation, and performance dashboards in Salesforce.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">WM</div>
+        <div class="exp-period">Jun 2022 - Aug 2023</div>
+      </div>
+      <div>
+        <div class="exp-role">Senior Sales Operations Analyst</div>
+        <ul class="exp-bullets">
+          <li>Served as <span class="exp-highlight">Salesforce Product Owner</span> in an Agile environment, owning the technical roadmap for sales system features including prioritization, UAT, and release management.</li>
+          <li>Led data integration review and technical coordination for mergers and acquisitions, mapping source schemas to target data models and ensuring clean system consolidation.</li>
+          <li>Monitored and analyzed data integrations using Snowflake and SQL, proactively identifying pipeline failures and data quality issues.</li>
+          <li>Provided Tier 3 escalation support for advanced system issues across the Salesforce org and supported AppExchange product implementations.</li>
+        </ul>
+      </div>
+    </div>
+
+        <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">WM</div>
+        <div class="exp-period">Apr 2019 - Jun 2022</div>
+      </div>
+      <div>
+        <div class="exp-role">Sales Operations Analyst</div>
+        <ul class="exp-bullets">
+          <li><span class="exp-highlight">Led Salesforce Classic to Lightning migration</span> including system configuration, training program development, and driving org-wide adoption</li>
+          <li>Led a major data model improvement project end-to-end, coordinating across IT, Training, and Sales Ops through design, UAT, and launch.</li>
+          <li>Investigated and analyzed data trends using SOQL and SQL to surface system health and behavioral insights.</li>
+          <li>Contributed to feature prioritization and user experience review for large-scale system improvement initiatives.</li>
+        </ul>
+      </div>
+    </div>
+    
+        <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">WM</div>
+        <div class="exp-period">May 2014 - Mar 2019</div>
+      </div>
+      <div>
+        <div class="exp-role">Sales Operations Liaison</div>
+        <ul class="exp-bullets">
+          <li>Managed bulk lead loading, assignment workflows, and hierarchy builds across <span class="exp-highlight">all market areas in Salesforce.</span></li>
+          <li>Maintained data integrity through deduplication review, record governance, and ongoing hygiene operations.</li>
+          <li>Served on core UAT team in partership with IT, Training, and Sales Ops for scheduled and unscheduled releases.</li>
+          <li>Supported and maintained third party applications including Salesforce to Outlook, D&B Hoovers, and iTools.</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TOOLS BUILT -->
+  <section id="tools">
+    <p class="section-label">Tools Built</p>
+    <h2>Vibe-coded <em>in production.</em></h2>
+    <p style="color: var(--ink-muted); margin-bottom: 2.5rem; max-width: 60ch; line-height: 1.8;">
+      Seven internal tools shipped at Shopify using Claude Code, Gumloop, and Cursor. Each replaced a manual workflow
+      with a self-serve solution. These tools were built for internal use and are not publicly available.
+    </p>
+    <div class="tools-grid">
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-number">01</span>
+          <span class="tool-badge">Gumloop</span>
+        </div>
+        <div class="tool-name">Event Attendee Enrichment App</div>
+        <div class="tool-desc">
+          Self-serve Gumloop app used by the marketing team to enrich attendee lists from in-person events - no manual intervention required.
+        </div>
+        <div class="tool-stack"><span>Gumloop</span><span>Data Enrichment</span><span>Marketing Ops</span></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-number">02</span>
+          <span class="tool-badge">Gumloop</span>
+        </div>
+        <div class="tool-name">Campaign Member Loader</div>
+        <div class="tool-desc">
+          Self-serve Gumloop app enabling anyone to load contacts and leads as campaign members directly into Salesforce - zero data ops involvement.
+        </div>
+        <div class="tool-stack"><span>Gumloop</span><span>Salesforce</span><span>CRM Automation</span></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-number">03</span>
+          <span class="tool-badge">Cursor</span>
+        </div>
+        <div class="tool-name">Batch Website Status Checker</div>
+        <div class="tool-desc">
+          Python script that processes a list of websites in batches, classifying each as active, inactive, for sale, or a redirect - useful for data quality and prospecting workflows.
+        </div>
+        <div class="tool-stack"><span>Cursor</span><span>Python</span><span>Data Quality</span></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-number">04</span>
+          <span class="tool-badge">Claude Code</span>
+        </div>
+        <div class="tool-name">Auto-Merge Request Batch Reviewer</div>
+        <div class="tool-desc">
+          Claude-built skill to batch review automatically-created account merge requests for contract consolidations - replacing a previously manual, high-volume review task.
+        </div>
+        <div class="tool-stack"><span>Claude Code</span><span>Salesforce</span><span>Data Governance</span></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-number">05</span>
+          <span class="tool-badge">Claude Code</span>
+        </div>
+        <div class="tool-name">Ad-Hoc Merge Request Reviewer</div>
+        <div class="tool-desc">
+          Companion Claude skill for reviewing ad-hoc merge requests submitted by end users - structuring a previously informal and inconsistent process.
+        </div>
+        <div class="tool-stack"><span>Claude Code</span><span>Salesforce</span><span>Data Governance</span></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-number">06</span>
+          <span class="tool-badge">Claude Code</span>
+        </div>
+        <div class="tool-name">Sales & Marketing Activity Surface</div>
+        <div class="tool-desc">
+          Internally hosted Claude-built tool for surfacing sales and marketing activity across multiple channels and methods, powered by data tables from the internal BigQuery data warehouse.
+        </div>
+        <div class="tool-stack"><span>Claude Code</span><span>BigQuery</span><span>SQL</span><span>RevOps</span></div>
+      </div>
+
+      <div class="tool-card" style="border-color: var(--accent-light);">
+        <div class="tool-header">
+          <span class="tool-number">07</span>
+          <span class="tool-badge" style="background: var(--accent); color: #fff; border-color: var(--accent);">Flagship</span>
+        </div>
+        <div class="tool-name">Self-Serve Duplicate Account Review Engine</div>
+        <div class="tool-desc">
+          The most complex tool in the suite. An internally hosted AI-powered application that enabled Sales and RevOps to perform duplicate account reviews without routing to Data Ops. Built on institutional knowledge that had never been formally documented, it featured a rigorous decision matrix covering <strong>9 distinct scenarios</strong> - each documented in Mermaid charts - with branching logic to determine whether accounts should be merged, data updated, or hierarchies built. When a merge was appropriate, the tool surfaced the recommended "winner" account with AI-generated rationale. Queries that had been run manually for every individual review were fully automated. The tool reached testing phase before the role was eliminated.
+        </div>
+        <div class="tool-stack"><span>Claude Code</span><span>BigQuery</span><span>SQL</span><span>Mermaid</span><span>Salesforce</span></div>
+        <div class="tool-note">Reached testing phase. Not launched due to layoff.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-inner">
+      <div class="contact-copy">
+        <h2>Let's build something <em>together.</em></h2>
+        <p>
+          Open to GTM Engineer, Revenue Operations, Data Operations, and Salesforce-adjacent roles where systems thinking and
+          hands-on tool building are valued. Based in Canada, open to remote.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:jazmin.densmore@gmail.com" class="contact-link">
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">jazmin.densmore@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/jazmin-densmore/" class="contact-link" target="_blank" rel="noopener">
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-value">linkedin.com/in/jazmin-densmore</div>
+          </div>
+        </a>
+        <a href="https://github.com/jazdensmore" class="contact-link" target="_blank" rel="noopener">
+          <div>
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-value">github.com/jazdensmore</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built with HTML, CSS &amp; a lot of vibe coding.</p>
+  </footer>
+
+</body>
+</html>
